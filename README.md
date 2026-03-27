@@ -22,6 +22,13 @@ clo-store/
 └── README.md
 ```
 
+## Development environment
+
+| Tool | Version / notes |
+| --- | --- |
+| **Node.js** | **22.x** (e.g. v22.8 — use `nvm use 22` if you manage versions with [nvm](https://github.com/nvm-sh/nvm)) |
+| **Package manager** | [pnpm](https://pnpm.io/) (this repo includes a `.npmrc` for CRA + ESLint); `npm` / `yarn` can run the same `package.json` scripts |
+
 ## Available Scripts
 
 In the project directory, you can run:
