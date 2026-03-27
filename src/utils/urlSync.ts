@@ -21,7 +21,7 @@ export function getUrlParams(): {
     ? pricingStr.split(',').filter(Boolean) as PricingOption[]
     : [];
   
-  const sortBy = (params.get(PARAM_SORT) as SortOption) || 'name-asc';
+  const sortBy = (params.get(PARAM_SORT) as SortOption) || 'relevance';
   
   const minPrice = parseInt(params.get(PARAM_MIN_PRICE) || '0', 10);
   const maxPrice = parseInt(params.get(PARAM_MAX_PRICE) || '999', 10);
@@ -50,7 +50,7 @@ export function setUrlParams(
     params.set(PARAM_PRICING, pricing.join(','));
   }
   
-  if (sortBy && sortBy !== 'name-asc') {
+  if (sortBy && sortBy !== 'relevance') {
     params.set(PARAM_SORT, sortBy);
   }
   

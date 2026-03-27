@@ -27,6 +27,6 @@ export async function fetchContent(): Promise<{ contents: ContentItem[]; pricing
       pricing: PRICING_MAP[item.pricingOption] || 'Free',
       price: item.price,
     })),
-    pricingOptions: ['Free', 'Paid', 'View Only'],
+    pricingOptions: ['Paid', 'Free', 'View Only'],
   };
 }

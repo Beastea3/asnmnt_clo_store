@@ -1,6 +1,6 @@
 export type PricingOption = 'Free' | 'Paid' | 'View Only';
 
-export type SortOption = 'name-asc' | 'price-asc' | 'price-desc';
+export type SortOption = 'relevance' | 'name-asc' | 'price-asc' | 'price-desc';
 
 export const PRICING_MAP: Record<number, PricingOption> = {
   0: 'Paid',

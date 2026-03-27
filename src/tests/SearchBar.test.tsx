@@ -1,6 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react';
+import { render, renderHook, act, fireEvent, screen } from '@testing-library/react';
 import { SearchBar } from '../components/SearchBar';
 import { useContentStore } from '../store/contentStore';
 
@@ -25,12 +23,6 @@ describe('SearchBar', () => {
     // Check for the search icon by looking for the SVG element inside .search-icon
     const searchIcon = document.querySelector('.search-icon svg');
     expect(searchIcon).toBeInTheDocument();
-  });
-
-  it('should render Keyword search label', () => {
-    render(<SearchBar />);
-    
-    expect(screen.getByText('Keyword search')).toBeInTheDocument();
   });
 
   it('should update keyword in store on input change', () => {

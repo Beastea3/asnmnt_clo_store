@@ -1,8 +1,6 @@
 import { create } from 'zustand';
-import { PricingOption, ContentItem } from '../types';
+import { PricingOption, ContentItem, SortOption } from '../types';
 import { getUrlParams, setUrlParams } from '../utils/urlSync';
-
-export type SortOption = 'name-asc' | 'price-asc' | 'price-desc';
 
 interface ContentState {
   // Raw data
@@ -37,7 +35,7 @@ interface ContentState {
   syncFromUrl: () => void;
 }
 
-const DEFAULT_PRICING: PricingOption[] = ['Free', 'Paid', 'View Only'];
+const DEFAULT_PRICING: PricingOption[] = ['Paid', 'Free', 'View Only'];
 
 // Get initial state from URL
 const urlParams = getUrlParams();
@@ -47,8 +45,8 @@ export const useContentStore = create<ContentState>((set, get) => ({
   pricingOptions: DEFAULT_PRICING,
   selectedPricing: urlParams.pricing,
   keyword: urlParams.keyword,
-  priceRange: [0, 999] as [number, number],
-  sortBy: 'name-asc',
+  priceRange: urlParams.priceRange,
+  sortBy: urlParams.sortBy || 'relevance',
   page: 0,
   pageSize: 12,
   loading: false,
@@ -62,18 +60,18 @@ export const useContentStore = create<ContentState>((set, get) => ({
   }),
 
   togglePricing: (option) => {
-    const { selectedPricing, keyword, sortBy } = get();
+    const { selectedPricing, keyword, sortBy, priceRange } = get();
     const newSelected = selectedPricing.includes(option)
       ? selectedPricing.filter(p => p !== option)
       : [...selectedPricing, option];
     set({ selectedPricing: newSelected, page: 0, hasMore: true });
-    setUrlParams(keyword, newSelected, sortBy);
+    setUrlParams(keyword, newSelected, sortBy, priceRange);
   },
 
   setKeyword: (keyword) => {
-    const { selectedPricing, sortBy } = get();
+    const { selectedPricing, sortBy, priceRange } = get();
     set({ keyword, page: 0, hasMore: true });
-    setUrlParams(keyword, selectedPricing, sortBy);
+    setUrlParams(keyword, selectedPricing, sortBy, priceRange);
   },
 
   setPriceRange: (range) => {
@@ -83,14 +81,14 @@ export const useContentStore = create<ContentState>((set, get) => ({
   },
 
   setSortBy: (sortBy) => {
-    const { keyword, selectedPricing } = get();
+    const { keyword, selectedPricing, priceRange } = get();
     set({ sortBy, page: 0, hasMore: true });
-    setUrlParams(keyword, selectedPricing, sortBy);
+    setUrlParams(keyword, selectedPricing, sortBy, priceRange);
   },
 
   resetFilters: () => {
-    set({ selectedPricing: [], keyword: '', priceRange: [0, 999], sortBy: 'name-asc', page: 0, hasMore: true });
-    setUrlParams('', [], 'name-asc', [0, 999]);
+    set({ selectedPricing: [], keyword: '', priceRange: [0, 999], sortBy: 'relevance', page: 0, hasMore: true });
+    setUrlParams('', [], 'relevance', [0, 999]);
   },
 
   loadMore: () => {
@@ -107,7 +105,7 @@ export const useContentStore = create<ContentState>((set, get) => ({
     set({ 
       selectedPricing: urlParams.pricing, 
       keyword: urlParams.keyword,
-      sortBy: urlParams.sortBy || 'name-asc',
+      sortBy: urlParams.sortBy || 'relevance',
       priceRange: urlParams.priceRange || [0, 999],
       page: 0,
       hasMore: true

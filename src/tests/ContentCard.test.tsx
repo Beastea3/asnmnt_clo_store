@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ContentCard } from '../components/ContentCard';
 import { ContentItem } from '../types';

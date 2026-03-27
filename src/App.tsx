@@ -5,6 +5,7 @@ import { Filter } from './components/Filter';
 import { SearchBar } from './components/SearchBar';
 import { ContentGrid } from './components/ContentGrid';
 import { ContentGridSkeleton } from './components/ContentGridSkeleton';
+import { Sorter } from './components/Sorter';
 import './App.css';
 
 function App() {
@@ -43,26 +44,23 @@ function App() {
   return (
     <div className="app">
       <header className="header">
-        <span className="header-logo">CONNECT</span>
-        <span className="header-badge">OPTIONAL FEATURE</span>
+        <span aria-label="Go to Connect Main Page" className="header-logo"></span>
       </header>
       
       <main className="main">
         <div className="controls-bar">
           <SearchBar />
           <Filter />
+          <div className="sorter-container">
+            <Sorter />
+          </div>
         </div>
         
         {error ? (
-          <div className="content-grid-section">
-            <div className="content-grid-header">
-              <div className="content-grid-header-left">
-                <span className="content-count">Contents</span>
-              </div>
-            </div>
+          <div className="content-grid-section content-grid-section--plain">
             <div className="error-container">
               <p>{error}</p>
-              <button onClick={() => window.location.reload()}>Retry</button>
+              <button type="button" onClick={() => window.location.reload()}>Retry</button>
             </div>
           </div>
         ) : loading ? (

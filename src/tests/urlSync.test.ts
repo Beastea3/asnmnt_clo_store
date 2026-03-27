@@ -24,7 +24,7 @@ describe('urlSync', () => {
       
       expect(params.keyword).toBe('');
       expect(params.pricing).toEqual([]);
-      expect(params.sortBy).toBe('name-asc');
+      expect(params.sortBy).toBe('relevance');
       expect(params.priceRange).toEqual([0, 999]);
     });
 
@@ -93,10 +93,16 @@ describe('urlSync', () => {
       expect(new URLSearchParams(window.location.search).get('sort')).toBe('price-asc');
     });
 
-    it('should not set sort if name-asc (default)', () => {
-      setUrlParams('', [], 'name-asc');
+    it('should not set sort if relevance (default)', () => {
+      setUrlParams('', [], 'relevance');
       
       expect(new URLSearchParams(window.location.search).has('sort')).toBe(false);
+    });
+
+    it('should set sort when name-asc is selected', () => {
+      setUrlParams('', [], 'name-asc');
+
+      expect(new URLSearchParams(window.location.search).get('sort')).toBe('name-asc');
     });
 
     it('should set price range in URL', () => {

@@ -1,6 +1,4 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { renderHook, act } from '@testing-library/react';
+import { render, renderHook, act, fireEvent, screen } from '@testing-library/react';
 import { Filter } from '../components/Filter';
 import { useContentStore } from '../store/contentStore';
 
@@ -25,16 +23,10 @@ describe('Filter', () => {
     expect(screen.getByText('View Only')).toBeInTheDocument();
   });
 
-  it('should render Price Option label', () => {
-    renderFilter();
-    
-    expect(screen.getByText('Price Option')).toBeInTheDocument();
-  });
-
   it('should render Reset button', () => {
     renderFilter();
     
-    expect(screen.getByText('Reset')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'RESET' })).toBeInTheDocument();
   });
 
   it('should toggle pricing option on click', () => {
@@ -55,18 +47,11 @@ describe('Filter', () => {
     fireEvent.click(paidButton);
     
     // Then reset
-    const resetButton = screen.getByText('Reset');
+    const resetButton = screen.getByRole('button', { name: 'RESET' });
     fireEvent.click(resetButton);
     
     const { result } = renderHook(() => useContentStore());
     expect(result.current.selectedPricing).toEqual([]);
-  });
-
-  it('should render Sort by dropdown', () => {
-    renderFilter();
-    
-    expect(screen.getByText('Sort by')).toBeInTheDocument();
-    expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
 
   it('should render price slider', () => {

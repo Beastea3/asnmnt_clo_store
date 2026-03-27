@@ -39,6 +39,8 @@ export const ContentGrid: React.FC = () => {
     // Sort content
     result = [...result].sort((a, b) => {
       switch (sortBy) {
+        case 'relevance':
+          return 0;
         case 'name-asc':
           return a.title.localeCompare(b.title);
         case 'price-asc':
@@ -93,12 +95,7 @@ export const ContentGrid: React.FC = () => {
 
   if (filteredContent.length === 0) {
     return (
-      <div className="content-grid-section">
-        <div className="content-grid-header">
-          <div className="content-grid-header-left">
-            <span className="content-count">0 items</span>
-          </div>
-        </div>
+      <div className="content-grid-section content-grid-section--plain">
         <div className="no-results">
           <div className="no-results-icon">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -125,13 +122,7 @@ export const ContentGrid: React.FC = () => {
   }
 
   return (
-    <div className="content-grid-section">
-      <div className="content-grid-header">
-        <div className="content-grid-header-left">
-          <span className="content-label">Contents</span>
-          <span className="content-count">({filteredContent.length})</span>
-        </div>
-      </div>
+    <div className="content-grid-section content-grid-section--plain">
       <div className="content-grid">
         {displayedContent.map((item, index) => (
           <ContentCard 
@@ -142,8 +133,8 @@ export const ContentGrid: React.FC = () => {
         ))}
       </div>
       {canLoadMore && (
-        <div ref={loaderRef} className="loading-trigger">
-          <div className="loading-spinner">Loading more...</div>
+        <div ref={loaderRef} className="loading-trigger" aria-hidden>
+          <div className="loading-spinner">Loading more</div>
         </div>
       )}
     </div>

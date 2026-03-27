@@ -50,29 +50,28 @@ export const ContentCard: React.FC<ContentCardProps> = ({ item, priority = false
     : 'content-price';
 
   return (
-    <div ref={cardRef} className="content-card">
-      <div className={`content-image ${isLoaded ? 'loaded' : 'loading'}`}>
-        {/* 骨架占位 */}
-        {!isLoaded && <div className="image-skeleton" />}
-        
-        {/* 实际图片 - 只在进入视口附近时加载 */}
-        {isInView && (
-          <img
-            src={item.image}
-            alt={item.title}
-            onLoad={() => setIsLoaded(true)}
-            onError={() => setIsLoaded(true)} // 加载失败也显示
-            style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
-          />
-        )}
-      </div>
-      <div className="content-footer">
-        <div className="content-meta">
-          <span className="content-title">{item.title}</span>
-          <span className="content-user">{item.userName}</span>
+    <article ref={cardRef} className="content-card">
+      <div className="content-card-inner">
+        <div className={`content-image ${isLoaded ? 'loaded' : 'loading'}`}>
+          {!isLoaded && <div className="image-skeleton" aria-hidden />}
+          {isInView && (
+            <img
+              src={item.image}
+              alt={item.title}
+              onLoad={() => setIsLoaded(true)}
+              onError={() => setIsLoaded(true)}
+              style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
+            />
+          )}
         </div>
-        <span className={priceClass}>{formatPrice()}</span>
+        <div className="content-card-footer">
+          <div className="content-card-meta">
+            <span className="content-title">{item.title}</span>
+            <span className="content-user">{item.userName}</span>
+          </div>
+          <span className={priceClass}>{formatPrice()}</span>
+        </div>
       </div>
-    </div>
+    </article>
   );
 };

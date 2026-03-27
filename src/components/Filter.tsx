@@ -1,52 +1,39 @@
-import React from 'react';
+import type { FC } from 'react';
 import { useContentStore } from '../store/contentStore';
 import { PriceSlider } from './PriceSlider';
 
-export const Filter: React.FC = () => {
+export const Filter: FC = () => {
   const { 
     pricingOptions, 
     selectedPricing, 
     togglePricing, 
     resetFilters,
-    sortBy,
-    setSortBy
   } = useContentStore();
 
   return (
     <div className="filter-section">
-      <div className="filter-row">
-        <div className="filter-pills">
-          <span className="filter-label">Price Option</span>
-          {pricingOptions.map((option) => (
-            <button
-              key={option}
-              className={`filter-pill ${selectedPricing.includes(option) ? 'selected' : ''}`}
-              onClick={() => togglePricing(option)}
-            >
-              <span className="filter-checkbox" />
-              <span>{option}</span>
-            </button>
-          ))}
+      <div className="filter-toolbar">
+        <div className="filter-toolbar-row filter-toolbar-main">
+          <div className="filter-pills" role="group" aria-label="Pricing">
+            {pricingOptions.map((option) => (
+              <button
+                type="button"
+                key={option}
+                className={`filter-pill ${selectedPricing.includes(option) ? 'selected' : ''}`}
+                onClick={() => togglePricing(option)}
+              >
+                <span className="filter-checkbox" aria-hidden />
+                <span>{option}</span>
+              </button>
+            ))}
+          </div>
+          <div className="filter-slider-region">
+            <PriceSlider />
+          </div>
+          <button type="button" className="reset-btn" onClick={resetFilters}>
+            RESET
+          </button>
         </div>
-        
-        <PriceSlider />
-        
-        <div className="sort-section">
-          <span className="sort-label">Sort by</span>
-          <select 
-            className="sort-select"
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value as any)}
-          >
-            <option value="name-asc">Item Name</option>
-            <option value="price-asc">Higher Price</option>
-            <option value="price-desc">Lower Price</option>
-          </select>
-        </div>
-        
-        <button className="filter-pill reset-btn" onClick={resetFilters}>
-          RESET
-        </button>
       </div>
     </div>
   );

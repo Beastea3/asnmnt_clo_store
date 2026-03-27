@@ -172,7 +172,7 @@ describe('contentStore', () => {
       expect(result.current.selectedPricing).toEqual([]);
       expect(result.current.keyword).toBe('');
       expect(result.current.priceRange).toEqual([0, 999]);
-      expect(result.current.sortBy).toBe('name-asc');
+      expect(result.current.sortBy).toBe('relevance');
     });
   });
 
