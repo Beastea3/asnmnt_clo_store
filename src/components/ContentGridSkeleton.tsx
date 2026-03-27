@@ -1,7 +1,7 @@
 import type { FC } from 'react';
 
 export const ContentGridSkeleton: FC = () => {
-  // 生成 8 个骨架卡片
+  // Build 8 skeleton placeholder cards
   const skeletonCards = Array.from({ length: 8 }, (_, i) => i);
 
   return (

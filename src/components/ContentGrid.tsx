@@ -59,12 +59,12 @@ export const ContentGrid: React.FC = () => {
     return result;
   }, [allContent, selectedPricing, keyword, priceRange, sortBy]);
 
-  // 预加载策略：当前显示数量 + 预加载 2 行（8个卡片）
+  // Preload strategy: visible count plus two extra rows (8 cards)
   const preloadCount = pageSize * 2;
   const displayedContent = filteredContent.slice(0, visibleCount + preloadCount);
   const canLoadMore = displayedContent.length < filteredContent.length;
 
-  // Infinite scroll observer - 提前 300px 触发加载更多
+  // Infinite scroll observer: trigger load-more 300px before sentinel
   const handleObserver = useCallback((entries: IntersectionObserverEntry[]) => {
     const [target] = entries;
     if (target.isIntersecting) {
@@ -88,7 +88,7 @@ export const ContentGrid: React.FC = () => {
     return () => observer.disconnect();
   }, [handleObserver]);
 
-  // 重置可见数量当筛选条件变化
+  // Reset visible count when filters change
   useEffect(() => {
     setVisibleCount(pageSize);
   }, [selectedPricing, keyword, priceRange, sortBy, pageSize]);

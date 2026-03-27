@@ -2,6 +2,26 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Folder structure
+
+```
+clo-store/
+├── public/                 # Static assets (index.html, manifest, icons)
+├── src/
+│   ├── assets/             # Images, SVGs
+│   ├── components/         # UI (ContentGrid, Filter, SearchBar, etc.)
+│   ├── services/           # API / data fetching
+│   ├── store/              # Zustand state
+│   ├── tests/              # Jest + Testing Library specs
+│   ├── types/              # Shared TypeScript types
+│   ├── utils/              # URL sync, layout helpers
+│   ├── App.tsx / App.css   # Root layout and styles
+│   └── index.tsx           # CRA entry (renders App)
+├── package.json
+├── tsconfig*.json
+└── README.md
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

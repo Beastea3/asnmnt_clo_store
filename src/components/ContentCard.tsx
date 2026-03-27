@@ -3,7 +3,7 @@ import { ContentItem } from '../types';
 
 interface ContentCardProps {
   item: ContentItem;
-  priority?: boolean; // 是否优先加载（视口内或附近）
+  priority?: boolean; // load immediately (in or near viewport)
 }
 
 export const ContentCard: React.FC<ContentCardProps> = ({ item, priority = false }) => {
@@ -11,9 +11,9 @@ export const ContentCard: React.FC<ContentCardProps> = ({ item, priority = false
   const [isInView, setIsInView] = useState(priority);
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Intersection Observer 检测卡片是否进入视口附近
+  // IntersectionObserver: detect when card nears viewport
   useEffect(() => {
-    if (priority) return; // 如果是优先加载，不需要观察
+    if (priority) return; // priority cards skip observation
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -25,7 +25,7 @@ export const ContentCard: React.FC<ContentCardProps> = ({ item, priority = false
       },
       {
         root: null,
-        rootMargin: '200px', // 提前 200px 开始加载
+        rootMargin: '200px', // start loading 200px before visible
         threshold: 0,
       }
     );
